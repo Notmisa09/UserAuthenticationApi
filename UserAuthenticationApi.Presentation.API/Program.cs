@@ -1,3 +1,4 @@
+using UserAuthenticationApi.Core.Application;
 using UserAuthenticationApi.Infrastucture.Persistance;
 using UserAuthenticationApi.Presentation.API.Extensions;
 
@@ -11,6 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddPersistanceLayer(builder.Configuration);
 builder.Services.AddSwaggerExtension();
+builder.Services.AddApplicationLayer(builder.Configuration);
 
 var app = builder.Build();
 

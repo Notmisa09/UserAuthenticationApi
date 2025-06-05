@@ -11,10 +11,11 @@ namespace UserAuthenticationApi.Infrastucture.Persistance.Repositories
         {
             _dbContext = DbContext;
         }
-        public async Task AddAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
             await set.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
+            return entity;
         }
 
         public async Task RemoveAsync(T entity)

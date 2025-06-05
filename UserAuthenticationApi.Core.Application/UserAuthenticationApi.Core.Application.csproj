@@ -7,16 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\" />
     <Folder Include="Feautures\Phones\Commands\" />
     <Folder Include="Feautures\Phones\Queries\" />
-    <Folder Include="Feautures\Users\Commands\" />
-    <Folder Include="Feautures\Users\" />
-    <Folder Include="Feautures\Users\Queries\" />
+    <Folder Include="Interfaces\IServices\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="14.0.0" />
+    <PackageReference Include="MediatR" Version="12.5.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.16" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />

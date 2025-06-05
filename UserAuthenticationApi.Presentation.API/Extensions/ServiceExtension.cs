@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 
 namespace UserAuthenticationApi.Presentation.API.Extensions
 {
@@ -25,6 +26,8 @@ namespace UserAuthenticationApi.Presentation.API.Extensions
                         Url = new Uri("https://www.instagram.com/misamorasuero/")
                     }
                 });
+
+                opt.DescribeAllParametersInCamelCase();
             });
         }
     }

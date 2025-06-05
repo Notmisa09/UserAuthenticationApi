@@ -8,5 +8,18 @@ namespace UserAuthenticationApi.Infrastucture.Persistance.Repositories
     {
         private readonly ApplicationContext _context;
         public UsersRepository(ApplicationContext context) : base(context) => _context = context;
+
+        public async Task<bool> EmailExistanceAsync(string email) => await _context.Users.Where(x => x.Email == email).AnyAsync();
+        public async Task<IList<Users>> GetUserWithPhones() => await _context.Users.Include(x => x.Phones).ToListAsync(); 
+        public async Task<bool> EmailIsUnique(string Email)
+        {
+            if(await EmailExistanceAsync(Email))
+            {
+                throw new Exception("Email already exists");
+            };
+
+            return false;
+        }
+
     }
 }
