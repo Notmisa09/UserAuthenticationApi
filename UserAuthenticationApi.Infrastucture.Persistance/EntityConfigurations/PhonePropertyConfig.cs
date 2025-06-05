@@ -4,7 +4,7 @@ using UserAuthenticationApi.Core.Domain.Entities;
 
 namespace UserAuthenticationApi.Infrastucture.Persistance.EntityConfigurations
 {
-    internal class PhonePropertyConfig : IEntityTypeConfiguration<Phone>
+    public  class PhonePropertyConfig : IEntityTypeConfiguration<Phone>
     {
         public void Configure(EntityTypeBuilder<Phone> mb)
         {
@@ -27,7 +27,7 @@ namespace UserAuthenticationApi.Infrastucture.Persistance.EntityConfigurations
             //Relaciones entre las entidades
             mb.HasOne(p => p.Users)
                 .WithMany(p => p.Phones)
-                .HasForeignKey(p => p.UserId)
+                .HasForeignKey(p => p.Users.Id)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

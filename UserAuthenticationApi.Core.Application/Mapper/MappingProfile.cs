@@ -17,7 +17,7 @@ namespace UserAuthenticationApi.Core.Application.Mapper
             //Mapeo de phoneDto a Entidad base
             CreateMap<PhonesDto, Phone>().ReverseMap();
 
-            CreateMap<AddUsersCommand, Users>().ReverseMap();
+            CreateMap<AddUsersCommand, Users>().ForMember(dest => dest.Phones, opt => opt.MapFrom(src => src.Phones)).ReverseMap();
         }
     }
 }

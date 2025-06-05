@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UserAuthenticationApi.Infrastucture.Persistance.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigration : Migration
+    public partial class Fixing_phones_entity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,7 +39,6 @@ namespace UserAuthenticationApi.Infrastucture.Persistance.Migrations
                     Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CityCode = table.Column<int>(type: "int", nullable: false),
                     CountryCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
                     UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>

@@ -41,9 +41,6 @@ namespace UserAuthenticationApi.Infrastucture.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("UsersId")
                         .HasColumnType("uniqueidentifier");
 

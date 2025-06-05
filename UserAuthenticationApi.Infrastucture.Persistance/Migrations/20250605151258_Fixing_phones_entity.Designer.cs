@@ -12,8 +12,8 @@ using UserAuthenticationApi.Infrastucture.Persistance;
 namespace UserAuthenticationApi.Infrastucture.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250605032233_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20250605151258_Fixing_phones_entity")]
+    partial class Fixing_phones_entity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,9 +43,6 @@ namespace UserAuthenticationApi.Infrastucture.Persistance.Migrations
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("UsersId")
                         .HasColumnType("uniqueidentifier");
