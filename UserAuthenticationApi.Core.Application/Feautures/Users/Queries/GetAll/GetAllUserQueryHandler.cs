@@ -3,7 +3,6 @@ using UserAuthenticationApi.Core.Application.Common;
 using UserAuthenticationApi.Core.Application.Dtos;
 using UserAuthenticationApi.Core.Application.Feautures.Users.Queries.GetAll;
 using UserAuthenticationApi.Core.Application.Interfaces.IRepositories;
-using UserAuthenticationApi.Core.Domain.Entities;
 
 namespace UserAuthenticationApi.Core.Application.Feautures.Users.Queries
 {
@@ -16,7 +15,7 @@ namespace UserAuthenticationApi.Core.Application.Feautures.Users.Queries
         {
             var users = await _userRepository.GetUserWithPhones();
 
-            if (users.Count() == 0) throw new ApiExeption("No hay usuarios regitrados aun");
+            if (users.Count() == 0) throw new ApiExeption("No hay usuarios regitrados aun", 400);
 
             var userWithPhone = users.Where(x => x.IsActive).Select(x => new UsersDto 
             {

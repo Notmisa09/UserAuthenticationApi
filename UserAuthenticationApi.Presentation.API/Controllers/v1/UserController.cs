@@ -35,7 +35,6 @@ namespace UserAuthenticationApi.Presentation.API.Controllers.v1
             await Mediator.Send(command);
             return Created();
         }
-        #endregion
 
         [HttpPost("Login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -47,6 +46,10 @@ namespace UserAuthenticationApi.Presentation.API.Controllers.v1
             var result = await Mediator.Send(command);
             return Ok(result);
         }
+
+
+
+        #endregion
 
     }
 }

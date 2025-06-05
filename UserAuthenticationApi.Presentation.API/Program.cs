@@ -25,6 +25,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseErrorHandleMiddleware();
 app.UserSwaggerExtensions();
 app.MapControllers();
 app.Run();

@@ -1,4 +1,5 @@
 ﻿using Swashbuckle.AspNetCore.SwaggerUI;
+using UserAuthenticationApi.Presentation.API.Middleware;
 
 namespace UserAuthenticationApi.Presentation.API.Extensions
 {
@@ -12,6 +13,10 @@ namespace UserAuthenticationApi.Presentation.API.Extensions
                 opt.SwaggerEndpoint("/swagger/v1/swagger.json,", "UserAuthApp");
                 opt.DefaultModelRendering(ModelRendering.Model);
             });
+        }
+        public static void UseErrorHandleMiddleware(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<ErrorHandlerMiddleware>();
         }
     }
 }

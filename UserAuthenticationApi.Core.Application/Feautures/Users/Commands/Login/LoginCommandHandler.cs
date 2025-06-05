@@ -29,7 +29,7 @@ namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Login
 
            var emailVerifier = await _userRepository.EmailExistanceAsync(request.Email);
            var passwordVerifier = await _userRepository.VerifyPasswordAsync(hashPassword);
-            if (!emailVerifier || !passwordVerifier) throw new ApiExeption("Email o contraseña incorrectos trate de nuevo");
+            if (!emailVerifier || !passwordVerifier) throw new ApiExeption("Email o contraseña incorrectos trate de nuevo",400);
 
             var user = await _userRepository.GetUserByEmail(request.Email);
             var token = await _jwtGeneratorService.GenerateJwt(user);

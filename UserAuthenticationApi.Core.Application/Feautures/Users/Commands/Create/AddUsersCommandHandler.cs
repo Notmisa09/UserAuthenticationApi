@@ -27,7 +27,7 @@ namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create
         {
             //Revisar si el email ya existe
             var response = await _userRepository.EmailExistanceAsync(command.Email);
-            if (response) throw new ApiExeption("El email ya está en uso");
+            if (response) throw new ApiExeption("El email ya está en uso", 400);
 
             //Mapeo de entidades
             var adduser = _mapper.Map<Domain.Entities.Users>(command);
