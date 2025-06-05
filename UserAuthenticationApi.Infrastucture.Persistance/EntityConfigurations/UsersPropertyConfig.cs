@@ -8,12 +8,32 @@ namespace UserAuthenticationApi.Infrastucture.Persistance.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Users> mb)
         {
-            mb.ToTable("users");
             mb.HasKey(x => x.Id);
-            mb.HasMany(x => x.Phones).
-                WithOne(x => x.Users)
-               .HasForeignKey(x => x.UserId)
-               .OnDelete(DeleteBehavior.Cascade);
+          
+            mb.ToTable("users");
+
+            mb.Property(u => u.Name)
+                .HasMaxLength(50)
+                .IsRequired();
+
+            mb.Property(u => u.Email)
+                .HasMaxLength(50)
+                .IsRequired();
+
+            mb.Property(u => u.Password)
+                .HasMaxLength(225)
+                .IsRequired();
+
+            mb.Property(u => u.CreatedDate)
+                .HasDefaultValue("GETUTCDATE()")
+                .IsRequired();
+
+            mb.Property(u => u.ModifiedDate)
+                .IsRequired(false);
+
+            mb.Property(u => u.LastLogin)
+                .HasDefaultValue("GETUTCDATE()")
+                .IsRequired(false);
         }
     }
 }

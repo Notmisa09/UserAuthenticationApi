@@ -1,4 +1,5 @@
 using UserAuthenticationApi.Infrastucture.Persistance;
+using UserAuthenticationApi.Presentation.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +21,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
+app.UserSwaggerExtensions();
 app.MapControllers();
-
 app.Run();
