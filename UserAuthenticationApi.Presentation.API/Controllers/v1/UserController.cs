@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using UserAuthenticationApi.Core.Application.Feautures.Users.Commands;
+using UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create;
 using UserAuthenticationApi.Core.Application.Feautures.Users.Queries;
 
 namespace UserAuthenticationApi.Presentation.API.Controllers.v1
@@ -22,18 +22,28 @@ namespace UserAuthenticationApi.Presentation.API.Controllers.v1
         #endregion
 
         #region Commands
-        [HttpPost]
+        [HttpPost("RegisterUser")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-        public async Task<IActionResult> Post([FromBody] AddUsersCommand command)
+        public async Task<IActionResult> RegisterUser([FromBody] AddUsersCommand command)
         {
             if (!ModelState.IsValid) return BadRequest("Debe de enviar los datos correctamente");
             await Mediator.Send(command);
             return Created();
         }
         #endregion
+
+        [HttpPost("Login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Login()
+        {
+            if (!ModelState.IsValid) return BadRequest("Debe de enviar los datos correctamente");
+            return Ok();
+        }
 
     }
 }

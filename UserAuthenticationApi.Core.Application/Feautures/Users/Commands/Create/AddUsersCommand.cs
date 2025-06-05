@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using UserAuthenticationApi.Core.Application.Dtos;
 
-namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands
+namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create
 {
     public class AddUsersCommand : IRequest<Unit>
     {
@@ -12,6 +12,6 @@ namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands
         public DateTime? LastLogin { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public IList<PhonesDto> Phones { get; set; } = [];
+        public IList<PhoneAddDto> Phones { get; set; } = [];
     }
 }

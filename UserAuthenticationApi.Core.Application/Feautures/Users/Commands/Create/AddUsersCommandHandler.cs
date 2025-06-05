@@ -5,18 +5,18 @@ using UserAuthenticationApi.Core.Application.Helpers;
 using UserAuthenticationApi.Core.Application.Interfaces.IRepositories;
 using UserAuthenticationApi.Core.Application.Interfaces.IServices;
 
-namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands
+namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create
 {
     public class AddUsersCommandHandler : IRequestHandler<AddUsersCommand, Unit>
     {
         private readonly IUsersRepository _userRepository;
         private readonly IJwtGeneratorService _jwtGeneratorService;
         private readonly IMapper _mapper;
-        
+
         public AddUsersCommandHandler(
-            IUsersRepository userRepository, 
+            IUsersRepository userRepository,
             IJwtGeneratorService jwtGeneratorService,
-            IMapper mapper) 
+            IMapper mapper)
         {
             _mapper = mapper;
             _userRepository = userRepository;
@@ -30,7 +30,7 @@ namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands
             if (response) throw new ApiExeption("El email ya está en uso");
 
             //Mapeo de entidades
-           var adduser = _mapper.Map<UserAuthenticationApi.Core.Domain.Entities.Users>(command);
+            var adduser = _mapper.Map<Domain.Entities.Users>(command);
 
             //Establecer la fecha de login igual a la de creación
             adduser.LastLogin = DateTime.UtcNow;

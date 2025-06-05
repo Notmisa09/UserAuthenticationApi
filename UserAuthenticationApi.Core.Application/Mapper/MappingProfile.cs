@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UserAuthenticationApi.Core.Application.Dtos;
-using UserAuthenticationApi.Core.Application.Feautures.Users.Commands;
+using UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create;
 using UserAuthenticationApi.Core.Domain.Entities;
 
 namespace UserAuthenticationApi.Core.Application.Mapper
@@ -16,7 +11,11 @@ namespace UserAuthenticationApi.Core.Application.Mapper
         {
             //Mapeo de phoneDto a Entidad base
             CreateMap<PhonesDto, Phone>().ReverseMap();
+            CreateMap<PhoneAddDto, Phone>().ReverseMap();
 
+            CreateMap<Users, UsersDto>().ReverseMap();
+
+            //Mapeo de addUserCommand a entidad base
             CreateMap<AddUsersCommand, Users>().ForMember(dest => dest.Phones, opt => opt.MapFrom(src => src.Phones)).ReverseMap();
         }
     }
