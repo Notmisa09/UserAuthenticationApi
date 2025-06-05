@@ -12,7 +12,6 @@ namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands
         public DateTime? LastLogin { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public string Token { get; set; } = string.Empty;
         public IList<PhonesDto> Phones { get; set; } = [];
     }
 }
