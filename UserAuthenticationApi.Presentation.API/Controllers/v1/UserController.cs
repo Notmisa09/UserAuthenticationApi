@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create;
+using UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Login;
 using UserAuthenticationApi.Core.Application.Feautures.Users.Queries;
+using UserAuthenticationApi.Core.Application.Feautures.Users.Queries.GetAll;
 
 namespace UserAuthenticationApi.Presentation.API.Controllers.v1
 {
@@ -39,10 +41,11 @@ namespace UserAuthenticationApi.Presentation.API.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Login()
+        public async Task<IActionResult> Login([FromQuery] LoginCommand command)
         {
             if (!ModelState.IsValid) return BadRequest("Debe de enviar los datos correctamente");
-            return Ok();
+            var result = await Mediator.Send(command);
+            return Ok(result);
         }
 
     }

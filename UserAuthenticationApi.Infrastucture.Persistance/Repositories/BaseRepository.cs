@@ -28,7 +28,7 @@ namespace UserAuthenticationApi.Infrastucture.Persistance.Repositories
 
         public async Task<T?> GetByIdAsync(int? Id) => await _dbContext.Set<T>().FindAsync(Id);
 
-        public async Task UpdateAsync(T entity, int Id)
+        public async Task UpdateAsync(T entity, dynamic Id)
         {
             var entry = await set.FindAsync(Id);
             if (entry == null) _dbContext.Entry(entry).CurrentValues.SetValues(entity);

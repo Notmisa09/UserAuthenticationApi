@@ -7,5 +7,7 @@ namespace UserAuthenticationApi.Core.Application.Interfaces.IRepositories
         Task<bool> EmailExistanceAsync(string email);
         Task<IList<Users>> GetUserWithPhones();
         Task<bool> EmailIsUnique(string Email);
+        Task<bool> VerifyPasswordAsync(string password);
+        Task<Users> GetUserByEmail(string email);
     }
 }

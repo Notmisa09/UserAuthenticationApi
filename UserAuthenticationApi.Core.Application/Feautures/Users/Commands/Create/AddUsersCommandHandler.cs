@@ -33,7 +33,7 @@ namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create
             var adduser = _mapper.Map<Domain.Entities.Users>(command);
 
             //Establecer la fecha de login igual a la de creación
-            adduser.LastLogin = DateTime.UtcNow;
+            adduser.LastLogin = DateTime.Now;
 
             //Encriptar la contraseña
             adduser.Password = PasswordEncryptator.HashUserPassword384(command.Password);

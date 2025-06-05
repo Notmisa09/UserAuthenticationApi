@@ -10,7 +10,10 @@ namespace UserAuthenticationApi.Infrastucture.Persistance.Repositories
         public UsersRepository(ApplicationContext context) : base(context) => _context = context;
 
         public async Task<bool> EmailExistanceAsync(string email) => await _context.Users.Where(x => x.Email == email).AnyAsync();
-        public async Task<IList<Users>> GetUserWithPhones() => await _context.Users.Include(x => x.Phones).ToListAsync(); 
+        public async Task<IList<Users>> GetUserWithPhones() => await _context.Users.Include(x => x.Phones).ToListAsync();
+        public async Task<bool> VerifyPasswordAsync(string password) => await _context.Users.Where(x => x.Password == password).AnyAsync();
+        public async Task<Users> GetUserByEmail(string email) => await _context.Users.Where(x => x.Email == email).Include(x => x.Phones).FirstAsync();
+
         public async Task<bool> EmailIsUnique(string Email)
         {
             if(await EmailExistanceAsync(Email))
@@ -20,6 +23,7 @@ namespace UserAuthenticationApi.Infrastucture.Persistance.Repositories
 
             return false;
         }
+
 
     }
 }
