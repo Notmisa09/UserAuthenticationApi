@@ -25,14 +25,14 @@ namespace UserAuthenticationApi.Infrastucture.Persistance.EntityConfigurations
                 .IsRequired();
 
             mb.Property(u => u.CreatedDate)
-                .HasDefaultValue("GETUTCDATE()")
+                .HasDefaultValueSql("GETUTCDATE()")
                 .IsRequired();
 
             mb.Property(u => u.ModifiedDate)
-                .IsRequired(false);
+                .IsRequired();
 
             mb.Property(u => u.LastLogin)
-                .HasDefaultValue("GETUTCDATE()")
+                .HasDefaultValueSql("GETUTCDATE()")
                 .IsRequired(false);
         }
     }

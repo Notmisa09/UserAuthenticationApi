@@ -3,7 +3,7 @@
 namespace UserAuthenticationApi.Presentation.API.Controllers
 {
     [Controller]
-    [Route("[Controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class BaseApiController : ControllerBase
     {
        

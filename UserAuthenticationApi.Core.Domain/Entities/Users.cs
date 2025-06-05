@@ -8,8 +8,11 @@ namespace UserAuthenticationApi.Core.Domain.Entities
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
-        public IList<Phone> Phones { get; set; } = [];
-        public DateTime LastLogin {  get; set; }
+        public DateTime? LastLogin {  get; set; }
         public string Token {  get; set; } = string.Empty;
+
+        //Navigation Properties
+        public Guid Id { get; set; }
+        public IList<Phone> Phones { get; set; } = [];
     }
 }
