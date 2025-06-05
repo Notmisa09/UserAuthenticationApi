@@ -6,28 +6,22 @@ using UserAuthenticationApi.Core.Application.Interfaces.IRepositories;
 
 namespace UserAuthenticationApi.Core.Application.Feautures.Users.Queries
 {
-    public class GetAllUserQueryHandler : IRequestHandler<GetAllUsersQuery, IList<UsersDto>>
+    public class GetAllUserQueryHandler : IRequestHandler<GetAllUsersQuery, IList<UserGetAllDto>>
     {
         private readonly IUsersRepository _userRepository;
         public GetAllUserQueryHandler(IUsersRepository userRepository) => _userRepository = userRepository;
         
-        public async Task<IList<UsersDto>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
+        public async Task<IList<UserGetAllDto>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
             var users = await _userRepository.GetUserWithPhones();
 
             if (users.Count() == 0) throw new ApiExeption("No hay usuarios regitrados aun", 400);
 
-            var userWithPhone = users.Where(x => x.IsActive).Select(x => new UsersDto 
+            var userWithPhone = users.Where(x => x.IsActive).Select(x => new UserGetAllDto
             {
-                CreatedDate = x.CreatedDate,
-                ModifiedDate = x.ModifiedDate,
-                Email = x.Email,
-                Id = x.Id,
-                IsActive = x.IsActive,
-                LastLogin = x.LastLogin,
+                Email = x.Email,               
                 Name = x.Name,
                 Password = x.Password,
-                Token = x.Token,
                 Phones = x.Phones.Select(p => new PhonesDto
                 {
                     Id = p.Id,

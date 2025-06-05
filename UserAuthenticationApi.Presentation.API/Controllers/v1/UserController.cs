@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create;
 using UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Delete;
@@ -11,9 +12,14 @@ namespace UserAuthenticationApi.Presentation.API.Controllers.v1
     [Route("api/v{version:apiVersion}/[controller]")]
     public class UserController : BaseApiController
     {
+        private readonly IValidator<AddUsersCommand> _userValidatorAdd;
+        public UserController(IValidator<AddUsersCommand> userValidatorAdd)
+        {
+            _userValidatorAdd = userValidatorAdd;
+        }
+
         #region Queries
         [HttpGet("GetAllUsers")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -32,7 +38,13 @@ namespace UserAuthenticationApi.Presentation.API.Controllers.v1
 
         public async Task<IActionResult> RegisterUser([FromBody] AddUsersCommand command)
         {
-            if (!ModelState.IsValid) return BadRequest("Debe de enviar los datos correctamente");
+            var validate = await _userValidatorAdd.ValidateAsync(command);
+            if (!validate.IsValid)
+            {
+                var firstError = validate.Errors.FirstOrDefault()?.ErrorMessage;
+                var errorResponse = new { mensaje = firstError };
+                return BadRequest(errorResponse);
+            }
             await Mediator.Send(command);
             return Created();
         }

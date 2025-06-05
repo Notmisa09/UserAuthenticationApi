@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 
 namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Delete
 {

@@ -1,24 +1,16 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using UserAuthenticationApi.Core.Application.Common;
 using UserAuthenticationApi.Core.Application.Interfaces.IRepositories;
-using UserAuthenticationApi.Core.Application.Interfaces.IServices;
 
 namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Delete
 {
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Unit>
     {
         private readonly IUsersRepository _userRepository;
-        private readonly IJwtGeneratorService _jwtGeneratorService;
-        private readonly IMapper _mapper;
         public DeleteUserCommandHandler(
-            IUsersRepository userRepository,
-            IMapper mapper,
-            IJwtGeneratorService jwtGeneratorService)
+            IUsersRepository userRepository)
         {
             _userRepository = userRepository;
-            _mapper = mapper;
-            _jwtGeneratorService = jwtGeneratorService;
         }
         public async Task<Unit> Handle(DeleteUserCommand command, CancellationToken cancellationToken)
         {

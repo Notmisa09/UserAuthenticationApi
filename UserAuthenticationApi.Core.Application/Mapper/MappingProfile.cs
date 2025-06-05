@@ -16,7 +16,13 @@ namespace UserAuthenticationApi.Core.Application.Mapper
             CreateMap<Users, UsersDto>().ReverseMap();
 
             //Mapeo de addUserCommand a entidad base
-            CreateMap<AddUsersCommand, Users>().ForMember(dest => dest.Phones, opt => opt.MapFrom(src => src.Phones)).ReverseMap();
+            CreateMap<AddUsersCommand, Users>().ForMember(dest => dest.Phones, opt => opt.MapFrom(src => src.Phones))
+                .AfterMap((src, dest) => {
+                    foreach(var phone in dest.Phones)
+                    {
+                        phone.Users.Id = dest.Id;
+                    }
+            }).ReverseMap();
         }
     }
 }

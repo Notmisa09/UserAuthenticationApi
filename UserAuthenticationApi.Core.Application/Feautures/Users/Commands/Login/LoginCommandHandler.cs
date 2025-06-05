@@ -42,7 +42,6 @@ namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Login
             var userDto = _mapper.Map<UsersDto>(user);
 
             return userDto;
-
         }
     }
 }
