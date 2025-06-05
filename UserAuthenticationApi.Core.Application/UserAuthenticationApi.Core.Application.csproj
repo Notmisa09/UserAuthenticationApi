@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Dtos\" />
+    <Folder Include="Feautures\Phones\Commands\" />
+    <Folder Include="Feautures\Phones\Queries\" />
+    <Folder Include="Feautures\Users\Commands\" />
+    <Folder Include="Feautures\Users\" />
+    <Folder Include="Feautures\Users\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UserAuthenticationApi.Core.Domain\UserAuthenticationApi.Core.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
