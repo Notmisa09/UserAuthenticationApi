@@ -5,7 +5,7 @@ namespace UserAuthenticationApi.Presentation.API.Extensions
 {
     public static class AppExtensions
     {
-        public static void UserSwaggerExtensions(this IApplicationBuilder app)
+        public static void UseSwaggerExtensions(this IApplicationBuilder app)
         {
             app.UseSwagger();
             app.UseSwaggerUI(opt =>

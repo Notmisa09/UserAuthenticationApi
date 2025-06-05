@@ -1,18 +1,19 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create;
+using UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Delete;
 using UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Login;
-using UserAuthenticationApi.Core.Application.Feautures.Users.Queries;
 using UserAuthenticationApi.Core.Application.Feautures.Users.Queries.GetAll;
 
 namespace UserAuthenticationApi.Presentation.API.Controllers.v1
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class UserController : BaseApiController
     {
-        #region Quiries
+        #region Queries
         [HttpGet("GetAllUsers")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -47,8 +48,17 @@ namespace UserAuthenticationApi.Presentation.API.Controllers.v1
             return Ok(result);
         }
 
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-
+        public async Task<IActionResult> Remove([FromQuery] DeleteUserCommand command)
+        {
+            if (!ModelState.IsValid) return BadRequest("Debe de enviar los datos correctamente");
+            var result = await Mediator.Send(command);
+            return NoContent();
+        }
         #endregion
 
     }

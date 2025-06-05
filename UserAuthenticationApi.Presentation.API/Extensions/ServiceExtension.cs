@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace UserAuthenticationApi.Presentation.API.Extensions
 {
@@ -53,6 +53,16 @@ namespace UserAuthenticationApi.Presentation.API.Extensions
                         }, new List<string>()
                     },
                 });
+            });
+        }
+
+        public static void AddApiVersioningExtension(this IServiceCollection service)
+        {
+            service.AddApiVersioning(config =>
+            {
+                config.DefaultApiVersion = new ApiVersion(1, 0);
+                config.AssumeDefaultVersionWhenUnspecified = true;
+                config.ReportApiVersions = true;
             });
         }
     }
