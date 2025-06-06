@@ -34,6 +34,9 @@ namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Login
             var user = await _userRepository.GetUserByEmail(request.Email);
             if(user == null) throw new ApiException("El usuario no pudo ser encontrado", 404);
 
+            var jwt = await _jwtGeneratorService.GenerateJwt(user);
+
+            user.Token = jwt;
             user.LastLogin = DateTime.Now;
             user.ModifiedDate = DateTime.Now;
 

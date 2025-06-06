@@ -2,9 +2,7 @@
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
-using UserAuthenticationApi.Core.Application.Dtos;
 using UserAuthenticationApi.Core.Application.Interfaces.IServices;
 using UserAuthenticationApi.Core.Domain.Entities;
 using UserAuthenticationApi.Core.Domain.Settings;
@@ -30,7 +28,7 @@ namespace UserAuthenticationApi.Core.Application.Services
                     new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                     new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Email, user.Email)
                 ]),
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires = DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
                 SigningCredentials = credentials,
                 Issuer = _jwtSettings.Issuer,
                 Audience = _jwtSettings.Audience,

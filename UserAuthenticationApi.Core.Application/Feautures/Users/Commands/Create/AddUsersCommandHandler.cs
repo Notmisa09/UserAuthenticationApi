@@ -8,7 +8,7 @@ using UserAuthenticationApi.Core.Application.Interfaces.IServices;
 
 namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create
 {
-    public class AddUsersCommandHandler : IRequestHandler<AddUsersCommand, Result<Unit>>
+    public class AddUsersCommandHandler : IRequestHandler<AddUsersCommand, Unit>
     {
         private readonly IUsersRepository _userRepository;
         private readonly IJwtGeneratorService _jwtGeneratorService;
