@@ -19,24 +19,6 @@ namespace UserAuthenticationApi.Core.Application.Services
             _jwtSettings = jwtSettings.Value;
         }
 
-        private RefreshToken GenerateRefreshToken()
-        {
-            return new RefreshToken()
-            {
-                Token = "",
-                Expires = DateTime.UtcNow,
-                Revoked = DateTime.UtcNow,
-            };
-        }
-
-        private string RandomTokenString()
-        {
-            using var rngCrytoServiceProvider = new RNGCryptoServiceProvider();
-            var randomBytes = new byte[40];
-            rngCrytoServiceProvider.GetBytes(randomBytes);
-            return BitConverter.ToString(randomBytes).Replace("-", "");
-        }
-
         public Task<string> GenerateJwt(Users user)
         {
             var SecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));

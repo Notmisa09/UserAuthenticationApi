@@ -9,6 +9,8 @@ namespace UserAuthenticationApi.Presentation.API.Extensions
         {
             service.AddSwaggerGen(opt =>
             {
+                opt.EnableAnnotations();
+
                 List<string> xmlFiles = Directory.GetFiles
                 (AppContext.BaseDirectory, "*.xml", searchOption: SearchOption.TopDirectoryOnly).ToList();
                 xmlFiles.ForEach(xmlFile => opt.IncludeXmlComments(xmlFile));

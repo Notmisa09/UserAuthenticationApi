@@ -33,14 +33,31 @@ namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Login
 
             var user = await _userRepository.GetUserByEmail(request.Email);
             if(user == null) throw new ApiException("El usuario no pudo ser encontrado", 404);
-            var token = await _jwtGeneratorService.GenerateJwt(user);
 
-            user.Token = token;
             user.LastLogin = DateTime.Now;
             user.ModifiedDate = DateTime.Now;
 
             await _userRepository.UpdateAsync(user, user.Id);
-            var userDto = _mapper.Map<UsersDto>(user);
+            var userDto = new UsersDto
+            {
+                CreatedDate =  user.CreatedDate,
+                Email = request.Email,
+                ModifiedDate = user.ModifiedDate,
+                Id = user.Id,
+                IsActive = user.IsActive,
+                LastLogin = user.LastLogin,
+                Name = user.Name,
+                Password = user.Password,
+                Token = user.Token,
+                Phones = user.Phones.Select(x => new PhonesDto
+                {
+                    CityCode = x.CityCode,
+                    CountryCode = x.CountryCode,
+                    Id = x.Id,
+                    UserId = user.Id,
+                    Number = x.Number,
+                }).ToList(),
+            };
 
             return userDto;
         }

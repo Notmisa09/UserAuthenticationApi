@@ -1,11 +1,9 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
-using UserAuthenticationApi.Core.Application.Common;
 using UserAuthenticationApi.Core.Application.Dtos;
 
 namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create
 {
-    public class AddUsersCommand : IRequest<Result<UserResAddDto>>
+    public class AddUsersCommand : IRequest<Unit>
     {
         public string Name { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;

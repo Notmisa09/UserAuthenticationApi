@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using FluentValidation;
 using UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create;
+using UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Update;
 
 namespace UserAuthenticationApi.Core.Application
 {
@@ -22,7 +23,9 @@ namespace UserAuthenticationApi.Core.Application
             service.AddMediatR(config => config.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
             service.AddAutoMapper(Assembly.GetExecutingAssembly());
             service.AddSingleton<IJwtGeneratorService, JwtGeneratorService>();
-            service.AddScoped<IValidator<AddUsersCommand>, UserCommandValidator>();
+            service.AddScoped<IValidator<AddUsersCommand>, AddUserCommandValidator>();
+            service.AddScoped<IValidator<UpdateUserCommand>, UpdateUserCommandValidator>();
+
             #endregion
 
             #region JWTConfigurations

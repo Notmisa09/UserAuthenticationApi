@@ -8,7 +8,7 @@ using UserAuthenticationApi.Core.Application.Interfaces.IServices;
 
 namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create
 {
-    public class AddUsersCommandHandler : IRequestHandler<AddUsersCommand, Result<UserResAddDto>>
+    public class AddUsersCommandHandler : IRequestHandler<AddUsersCommand, Result<Unit>>
     {
         private readonly IUsersRepository _userRepository;
         private readonly IJwtGeneratorService _jwtGeneratorService;
@@ -24,7 +24,7 @@ namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create
             _jwtGeneratorService = jwtGeneratorService;
         }
 
-        public async Task<Result<UserResAddDto>> Handle(AddUsersCommand command, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(AddUsersCommand command, CancellationToken cancellationToken)
         {
             //Revisar si el email ya existe
             var email = await _userRepository.EmailExistanceAsync(command.Email);
@@ -48,7 +48,7 @@ namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create
 
             var response = _mapper.Map<UserResAddDto>(user);
 
-            return Result<UserResAddDto>.Success(response,"Usuario creado exitosamente");
+            return Unit.Value;
         }
     }
 }

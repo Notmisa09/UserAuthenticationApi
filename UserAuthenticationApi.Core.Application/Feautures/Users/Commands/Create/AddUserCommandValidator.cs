@@ -2,9 +2,9 @@
 
 namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create
 {
-    public class UserCommandValidator : AbstractValidator<AddUsersCommand>
+    public class AddUserCommandValidator : AbstractValidator<AddUsersCommand>
     {
-        public UserCommandValidator()
+        public AddUserCommandValidator()
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("El nombre no puede estar vacío")
