@@ -26,7 +26,7 @@ namespace UserAuthenticationApi.Presentation.API.Middleware
                 var responseModel = new { mensaje =  error.Message };
                 response.StatusCode = error switch
                 {
-                    ApiExeption e =>
+                    ApiException e =>
 
                         e.ErrorCode switch
                         {

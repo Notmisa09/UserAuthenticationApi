@@ -6,18 +6,18 @@ using UserAuthenticationApi.Core.Application.Interfaces.IRepositories;
 
 namespace UserAuthenticationApi.Core.Application.Feautures.Users.Queries
 {
-    public class GetAllUserQueryHandler : IRequestHandler<GetAllUsersQuery, IList<UserGetAllDto>>
+    public class GetAllUserQueryHandler : IRequestHandler<GetAllUsersQuery, IList<UserResGetAllDto>>
     {
         private readonly IUsersRepository _userRepository;
         public GetAllUserQueryHandler(IUsersRepository userRepository) => _userRepository = userRepository;
         
-        public async Task<IList<UserGetAllDto>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
+        public async Task<IList<UserResGetAllDto>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
             var users = await _userRepository.GetUserWithPhones();
 
-            if (users.Count() == 0) throw new ApiExeption("No hay usuarios regitrados aun", 400);
+            if (users.Count() == 0) throw new ApiException("No hay usuarios regitrados aun", 400);
 
-            var userWithPhone = users.Where(x => x.IsActive).Select(x => new UserGetAllDto
+            var userWithPhone = users.Select(x => new UserResGetAllDto
             {
                 Email = x.Email,               
                 Name = x.Name,

@@ -31,7 +31,7 @@ namespace UserAuthenticationApi.Infrastucture.Persistance.Repositories
         public virtual async Task UpdateAsync(T entity, dynamic Id)
         {
             var entry = await set.FindAsync(Id);
-            if (entry == null) _dbContext.Entry(entry).CurrentValues.SetValues(entity);
+            if (entry != null) _dbContext.Entry(entry).CurrentValues.SetValues(entity);
             await _dbContext.SaveChangesAsync();
         }
     }

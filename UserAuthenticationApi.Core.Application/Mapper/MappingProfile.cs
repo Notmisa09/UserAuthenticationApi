@@ -11,11 +11,12 @@ namespace UserAuthenticationApi.Core.Application.Mapper
         {
             //Mapeo de phoneDto a Entidad base
             CreateMap<PhonesDto, Phone>().ReverseMap();
-            CreateMap<PhoneAddDto, Phone>().ReverseMap();
+            CreateMap<PhoneReqAddDto, Phone>().ReverseMap();
 
             CreateMap<Users, UsersDto>().ReverseMap();
 
-            //Mapeo de addUserCommand a entidad base
+            CreateMap<UserResAddDto, Users>().ReverseMap();
+
             CreateMap<AddUsersCommand, Users>().ForMember(dest => dest.Phones, opt => opt.MapFrom(src => src.Phones))
                 .AfterMap((src, dest) => {
                     foreach(var phone in dest.Phones)

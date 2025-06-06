@@ -15,7 +15,7 @@ namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Delete
         public async Task<Unit> Handle(DeleteUserCommand command, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetByIdAsync(command.Id);
-            if (user == null) throw new ApiExeption("La entidad que estás intentando eliminar no ha podido ser encontrada.",404);
+            if (user == null) throw new ApiException("La entidad que estás intentando eliminar no ha podido ser encontrada.",404);
 
             user.ModifiedDate = DateTime.Now;
             user.IsActive = false;

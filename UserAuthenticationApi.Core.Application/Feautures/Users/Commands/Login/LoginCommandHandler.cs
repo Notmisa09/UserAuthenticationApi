@@ -29,9 +29,10 @@ namespace UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Login
 
            var emailVerifier = await _userRepository.EmailExistanceAsync(request.Email);
            var passwordVerifier = await _userRepository.VerifyPasswordAsync(hashPassword);
-            if (!emailVerifier || !passwordVerifier) throw new ApiExeption("Email o contraseña incorrectos trate de nuevo",400);
+            if (!emailVerifier || !passwordVerifier) throw new ApiException("Email o contraseña incorrectos trate de nuevo",400);
 
             var user = await _userRepository.GetUserByEmail(request.Email);
+            if(user == null) throw new ApiException("El usuario no pudo ser encontrado", 404);
             var token = await _jwtGeneratorService.GenerateJwt(user);
 
             user.Token = token;

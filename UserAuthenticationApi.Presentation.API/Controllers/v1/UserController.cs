@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create;
 using UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Delete;
 using UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Login;
+using UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Update;
 using UserAuthenticationApi.Core.Application.Feautures.Users.Queries.GetAll;
 
 namespace UserAuthenticationApi.Presentation.API.Controllers.v1
@@ -20,6 +21,7 @@ namespace UserAuthenticationApi.Presentation.API.Controllers.v1
 
         #region Queries
         [HttpGet("GetAllUsers")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -44,13 +46,14 @@ namespace UserAuthenticationApi.Presentation.API.Controllers.v1
                 var firstError = validate.Errors.FirstOrDefault()?.ErrorMessage;
                 var errorResponse = new { mensaje = firstError };
                 return BadRequest(errorResponse);
-            }
+            };
             await Mediator.Send(command);
             return Created();
         }
 
         [HttpPost("Login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Login([FromQuery] LoginCommand command)
@@ -61,6 +64,7 @@ namespace UserAuthenticationApi.Presentation.API.Controllers.v1
         }
 
         [HttpDelete]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -71,7 +75,16 @@ namespace UserAuthenticationApi.Presentation.API.Controllers.v1
             var result = await Mediator.Send(command);
             return NoContent();
         }
-        #endregion
 
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Update([FromQuery] UpdateCommand command)
+        {
+            await Mediator.Send(command);
+            return NoContent();
+        }
+        #endregion
     }
 }

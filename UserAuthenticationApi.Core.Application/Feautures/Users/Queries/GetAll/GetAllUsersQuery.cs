@@ -3,7 +3,7 @@ using UserAuthenticationApi.Core.Application.Dtos;
 
 namespace UserAuthenticationApi.Core.Application.Feautures.Users.Queries.GetAll
 {
-    public class GetAllUsersQuery : IRequest<IList<UserGetAllDto>>
+    public class GetAllUsersQuery : IRequest<IList<UserResGetAllDto>>
     {
 
     }

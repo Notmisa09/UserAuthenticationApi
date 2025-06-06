@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
+using UserAuthenticationApi.Core.Application.Dtos;
 using UserAuthenticationApi.Core.Application.Interfaces.IServices;
 using UserAuthenticationApi.Core.Domain.Entities;
 using UserAuthenticationApi.Core.Domain.Settings;
@@ -16,6 +17,24 @@ namespace UserAuthenticationApi.Core.Application.Services
         public JwtGeneratorService(IOptions<JWTSettings> jwtSettings)
         {
             _jwtSettings = jwtSettings.Value;
+        }
+
+        private RefreshToken GenerateRefreshToken()
+        {
+            return new RefreshToken()
+            {
+                Token = "",
+                Expires = DateTime.UtcNow,
+                Revoked = DateTime.UtcNow,
+            };
+        }
+
+        private string RandomTokenString()
+        {
+            using var rngCrytoServiceProvider = new RNGCryptoServiceProvider();
+            var randomBytes = new byte[40];
+            rngCrytoServiceProvider.GetBytes(randomBytes);
+            return BitConverter.ToString(randomBytes).Replace("-", "");
         }
 
         public Task<string> GenerateJwt(Users user)
