@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
@@ -16,16 +15,6 @@ namespace UserAuthenticationApi.Presentation.API.Controllers.v1
     [Route("api/v{version:apiVersion}/[controller]")]
     public class UserController : BaseApiController
     {
-        private readonly IValidator<AddUsersCommand> _userValidatorAdd;
-        private readonly IValidator<UpdateUserCommand> _userValidatorUpdate;
-
-        public UserController(IValidator<AddUsersCommand> userValidatorAdd
-            , IValidator<UpdateUserCommand> userValidatorUpdate)
-        {
-            _userValidatorAdd = userValidatorAdd;
-            _userValidatorUpdate = userValidatorUpdate;
-        }
-
         #region Queries
         [Authorize]
         [HttpGet("GetAllUsers")]
@@ -55,13 +44,6 @@ namespace UserAuthenticationApi.Presentation.API.Controllers.v1
 
         public async Task<IActionResult> RegisterUser([FromBody] AddUsersCommand command)
         {
-            var validate = await _userValidatorAdd.ValidateAsync(command);
-            if (!validate.IsValid)
-            {
-                var firstError = validate.Errors.FirstOrDefault()?.ErrorMessage;
-                var errorResponse = new { mensaje = firstError };
-                return BadRequest(errorResponse);
-            };
             await Mediator.Send(command);
             return Created();
         }
@@ -106,13 +88,6 @@ namespace UserAuthenticationApi.Presentation.API.Controllers.v1
         Description = "Recibe los parametros para poder actualizar la informacion del usuario")]
         public async Task<IActionResult> Update([FromQuery] UpdateUserCommand command)
         {
-            var validate = await _userValidatorUpdate.ValidateAsync(command);
-            if (!validate.IsValid)
-            {
-                var firstError = validate.Errors.FirstOrDefault()?.ErrorMessage;
-                var errorResponse = new { mensaje = firstError };
-                return BadRequest(errorResponse);
-            };
             await Mediator.Send(command);
             return NoContent();
         }

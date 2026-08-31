@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using FluentValidation;
+using System.Net;
 using System.Text.Json;
 using UserAuthenticationApi.Core.Application.Common;
 
@@ -23,30 +24,40 @@ namespace UserAuthenticationApi.Presentation.API.Middleware
             {
                 var response = httpContext.Response;
                 response.ContentType = "application/json";
-                var responseModel = new { mensaje =  error.Message };
-                response.StatusCode = error switch
-                {
-                    ApiException e =>
 
-                        e.ErrorCode switch
+                string message = error.Message;
+                int statusCode;
+
+                switch (error)
+                {
+                    case ValidationException validationException:
+                        statusCode = (int)HttpStatusCode.BadRequest;
+                        message = string.Join(" | ", validationException.Errors.Select(e => e.ErrorMessage));
+                        break;
+                    case ApiException apiException:
+                        statusCode = apiException.ErrorCode switch
                         {
                             (int)HttpStatusCode.BadRequest => (int)HttpStatusCode.BadRequest,
                             (int)HttpStatusCode.InternalServerError => (int)HttpStatusCode.InternalServerError,
                             (int)HttpStatusCode.NotFound => (int)HttpStatusCode.NotFound,
                             (int)HttpStatusCode.NoContent => (int)HttpStatusCode.NoContent,
                             _ => (int)HttpStatusCode.InternalServerError
-                        },
-                    KeyNotFoundException e =>
+                        };
+                        break;
+                    case KeyNotFoundException:
+                        statusCode = (int)HttpStatusCode.NotFound;
+                        break;
+                    default:
+                        statusCode = (int)HttpStatusCode.InternalServerError;
+                        break;
+                }
 
-                        (int)HttpStatusCode.NotFound,
-                    _ => (int)HttpStatusCode.InternalServerError
-                };
-
+                response.StatusCode = statusCode;
+                var responseModel = new { mensaje = message };
                 var result = JsonSerializer.Serialize(responseModel);
 
                 await response.WriteAsync(result);
             }
         }
-
     }
 }

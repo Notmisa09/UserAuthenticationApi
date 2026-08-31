@@ -10,6 +10,8 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using FluentValidation;
+using MediatR;
+using UserAuthenticationApi.Core.Application.Behaviors;
 using UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Create;
 using UserAuthenticationApi.Core.Application.Feautures.Users.Commands.Update;
 
@@ -20,11 +22,14 @@ namespace UserAuthenticationApi.Core.Application
         public static void AddApplicationLayer(this IServiceCollection service, IConfiguration config)
         {
             #region Dependencies
-            service.AddMediatR(config => config.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+            service.AddMediatR(config => config.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()
+                , typeof(AddUsersCommand).Assembly
+                , typeof(UpdateUserCommand).Assembly));
             service.AddAutoMapper(Assembly.GetExecutingAssembly());
             service.AddSingleton<IJwtGeneratorService, JwtGeneratorService>();
             service.AddScoped<IValidator<AddUsersCommand>, AddUserCommandValidator>();
             service.AddScoped<IValidator<UpdateUserCommand>, UpdateUserCommandValidator>();
+            service.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
             #endregion
 
